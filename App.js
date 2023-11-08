@@ -20,8 +20,11 @@ export default function App() {
 
   const handleAdd = () => {
     Keyboard.dismiss();
-    setTasksItems([...tasksItems, task])
-    setTask(null);
+    if (!task) return;
+    else {
+      setTasksItems([...tasksItems, task])
+      setTask(null);
+    }
   };
 
   const completeTask = (index) => {
@@ -56,11 +59,9 @@ export default function App() {
           <View>
             <TextInput style={styles.textInput} placeholder={'Write a Task'} value={task} onChangeText={text => setTask(text)} />
           </View>
-          <View style={styles.addBtn}>
-            <TouchableOpacity onPress={() => handleAdd()}>
-              <Text style={styles.btnText}>+</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.addBtn} onPress={() => handleAdd()}>
+            <Text style={styles.btnText}>+</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>
@@ -115,14 +116,15 @@ const styles = StyleSheet.create({
   },
 
   btnText: {
-
     fontSize: 24,
     color: 'green',
     fontWeight: 'bold',
   },
 
   textInput: {
-    fontSize: 20
+    display: 'flex',
+    fontSize: 20,
+    width: '180%'
   },
 });
 

@@ -9,6 +9,9 @@ export default function Task(props) {
                 <Text style={styles.task}>
                     {props.text}
                 </Text>
+                <TouchableOpacity style={styles.editBtn}>
+                    <Text>✏️</Text>
+                </TouchableOpacity>
             </View>
         </>
     )
@@ -22,6 +25,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginTop: 15,
         marginBottom: 15,
     },
