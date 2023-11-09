@@ -33,6 +33,12 @@ export default function App() {
     setTasksItems(itemsCopy);
   };
 
+  const editTask = (index, str) => {
+    let itemsCopy = [...tasksItems];
+    itemsCopy[index] = str;
+    setTasksItems(itemsCopy);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
@@ -43,9 +49,17 @@ export default function App() {
             tasksItems.map((item, index) => {
               return (
                 <>
-                  <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                    <Task key={index} text={item} />
-                  </TouchableOpacity>
+                  <View key={index}>
+                    <View style={styles.taskContainer}>
+                      <Task key={index} text={item} />
+                      <TouchableOpacity style={styles.editBtn} onPress={() => editTask(index, "string")}>
+                        <Text>✏️</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.deleteBtn}  onPress={() => completeTask(index)}>
+                        <Text>❌</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </>
               )
             })
@@ -73,6 +87,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E6EBF0'
   },
+
+  taskContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },  
 
   tasksWrapper: {
     paddingTop: 80,
