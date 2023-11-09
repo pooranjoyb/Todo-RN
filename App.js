@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
   Keyboard
 } from 'react-native';
 import Task from './components/Task';
@@ -22,12 +23,12 @@ export default function App() {
     Keyboard.dismiss();
     if (!task) return;
     else {
-      setTasksItems([...tasksItems, task])
+      setTasksItems([...tasksItems, { text: task, completed: false }])
       setTask(null);
     }
   };
 
-  const completeTask = (index) => {
+  const deleteTask = (index) => {
     let itemsCopy = [...tasksItems];
     itemsCopy.splice(index, 1);
     setTasksItems(itemsCopy);
@@ -39,32 +40,45 @@ export default function App() {
     setTasksItems(itemsCopy);
   }
 
+  const completeTask = (index) => {
+    let itemsCopy = [...tasksItems];
+    itemsCopy[index].completed = !itemsCopy[index].completed;;
+    setTasksItems(itemsCopy);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
         <Text style={styles.title}>Today's Tasks</Text>
+        <ScrollView contentContainerStyle={styles.taskScreen}>
+          <View style={styles.items}>
+            {
+              tasksItems.map((item, index) => {
+                return (
+                  <>
+                    <View key={index}>
+                      <View style={styles.taskContainer}>
 
-        <View style={styles.items}>
-          {
-            tasksItems.map((item, index) => {
-              return (
-                <>
-                  <View key={index}>
-                    <View style={styles.taskContainer}>
-                      <Task key={index} text={item} />
-                      <TouchableOpacity style={styles.editBtn} onPress={() => editTask(index, "string")}>
-                        <Text>✏️</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.deleteBtn}  onPress={() => completeTask(index)}>
-                        <Text>❌</Text>
-                      </TouchableOpacity>
+                        <TouchableOpacity style={item.completed ? styles.completeTask : styles.inCompleteTask} onPress={() => completeTask(index)}></TouchableOpacity>
+
+                        <Task key={index} text={item.text} />
+
+                        <TouchableOpacity style={styles.editBtn} onPress={() => editTask(index, "string")}>
+                          <Text>✏️</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.deleteBtn} onPress={() => deleteTask(index)}>
+                          <Text>❌</Text>
+                        </TouchableOpacity>
+
+                      </View>
                     </View>
-                  </View>
-                </>
-              )
-            })
-          }
-        </View>
+                  </>
+                )
+              })
+            }
+          </View>
+        </ScrollView>
       </View>
 
       <KeyboardAvoidingView
@@ -88,20 +102,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#E6EBF0'
   },
 
+  taskScreen: {
+    height: 450,
+    width: '100%',
+  },
+
   taskContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-  },  
+  },
 
   tasksWrapper: {
-    paddingTop: 80,
+    paddingTop: 60,
     paddingHorizontal: 20,
   },
 
   title: {
     fontSize: 40,
+    marginBottom: 20,
     fontWeight: 'bold'
   },
   input: {
@@ -137,15 +157,34 @@ const styles = StyleSheet.create({
   },
 
   btnText: {
-    fontSize: 24,
+    fontSize: 40,
     color: 'green',
     fontWeight: 'bold',
+    marginBottom: 10
   },
 
   textInput: {
     display: 'flex',
     fontSize: 20,
-    width: '180%'
+    width: '160%',
+  },
+
+  inCompleteTask: {
+    width: 24,
+    height: 25,
+    borderRadius: 4,
+    marginRight: 5,
+    backgroundColor: '#55BCF9',
+    opacity: 0.8,
+  },
+
+  completeTask: {
+    width: 24,
+    height: 25,
+    borderRadius: 4,
+    marginRight: 5,
+    backgroundColor: '#00FF00',
+    opacity: 0.8,
   },
 });
 
