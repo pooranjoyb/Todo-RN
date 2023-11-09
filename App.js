@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-
 import {
   KeyboardAvoidingView,
   Platform,
@@ -50,33 +49,35 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
         <Text style={styles.title}>Today's Tasks</Text>
-        <ScrollView contentContainerStyle={styles.taskScreen}>
-          <View style={styles.items}>
-            {
-              tasksItems.map((item, index) => {
-                return (
-                  <>
-                    <View key={index}>
-                      <View style={styles.taskContainer}>
+        <ScrollView style={styles.taskScreen}>
+          <View>
+            <View style={styles.items}>
+              {
+                tasksItems.map((item, index) => {
+                  return (
+                    <>
+                      <View key={index}>
+                        <View style={styles.taskContainer}>
 
-                        <TouchableOpacity style={item.completed ? styles.completeTask : styles.inCompleteTask} onPress={() => completeTask(index)}></TouchableOpacity>
+                          <TouchableOpacity style={item.completed ? styles.completeTask : styles.inCompleteTask} onPress={() => completeTask(index)}></TouchableOpacity>
 
-                        <Task key={index} text={item.text} />
+                          <Task key={index} text={item.text} />
 
-                        <TouchableOpacity style={styles.editBtn} onPress={() => editTask(index, "string")}>
-                          <Text>✏️</Text>
-                        </TouchableOpacity>
+                          <TouchableOpacity style={styles.editBtn} onPress={() => editTask(index, "string")}>
+                            <Text>🖋️</Text>
+                          </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.deleteBtn} onPress={() => deleteTask(index)}>
-                          <Text>❌</Text>
-                        </TouchableOpacity>
+                          <TouchableOpacity style={styles.deleteBtn} onPress={() => deleteTask(index)}>
+                            <Text>❌</Text>
+                          </TouchableOpacity>
 
+                        </View>
                       </View>
-                    </View>
-                  </>
-                )
-              })
-            }
+                    </>
+                  )
+                })
+              }
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   },
 
   taskScreen: {
-    height: 450,
+    height: 550,
     width: '100%',
   },
 
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'green',
     fontWeight: 'bold',
-    marginBottom: 10
+    marginTop: -7
   },
 
   textInput: {

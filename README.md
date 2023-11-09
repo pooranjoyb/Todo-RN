@@ -8,7 +8,7 @@ It allows users to create, and delete tasks to help them stay organized.
 - [x] Create new tasks
 - [x] Mark tasks as completed
 - [ ] Edit existing tasks
-- [ ] Delete tasks
+- [x] Delete tasks
 - [ ] Filter tasks by status (All, Active, Completed)
 - [ ] Uses Local Storage to Store User Generated Data
 
@@ -35,9 +35,7 @@ npm install
 3. Start the app:
 
 ```bash
-npx react-native run-ios
-# or
-npx react-native run-android
+npm start
 ```
 
 ## License
