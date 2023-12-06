@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -17,6 +17,8 @@ export default function App() {
 
   const [task, setTask] = useState('');
   const [tasksItems, setTasksItems] = useState([])
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [temporaryText, setTemporaryText] = useState('');
 
   const handleAdd = () => {
     Keyboard.dismiss();
@@ -33,15 +35,22 @@ export default function App() {
     setTasksItems(itemsCopy);
   };
 
-  const editTask = (index, str) => {
+  // const editTask = (index) => {
+  //   setEditingIndex(index);
+  //   setTemporaryText(tasksItems[index].text);
+  // };
+
+  const saveTask = (index) => {
     let itemsCopy = [...tasksItems];
-    itemsCopy[index] = str;
+    itemsCopy[index].text = temporaryText;
     setTasksItems(itemsCopy);
-  }
+    setEditingIndex(null);
+    setTemporaryText('');
+  };
 
   const completeTask = (index) => {
     let itemsCopy = [...tasksItems];
-    itemsCopy[index].completed = !itemsCopy[index].completed;;
+    itemsCopy[index].completed = !itemsCopy[index].completed;
     setTasksItems(itemsCopy);
   }
 
@@ -61,9 +70,25 @@ export default function App() {
 
                           <TouchableOpacity style={item.completed ? styles.completeTask : styles.inCompleteTask} onPress={() => completeTask(index)}></TouchableOpacity>
 
-                          <Task key={index} text={item.text} />
-
-                          <TouchableOpacity style={styles.editBtn} onPress={() => editTask(index, "string")}>
+                          {editingIndex === index ? (
+                            <View style={styles.editingContainer}>
+                              <TextInput
+                                style={styles.editorInput}
+                                value={temporaryText}
+                                onChangeText={(text) => setTemporaryText(text)}
+                              />
+                              <TouchableOpacity
+                                style={styles.doneBtn}
+                                onPress={() => saveTask(index)}
+                              >
+                                <Text>✔️</Text>
+                              </TouchableOpacity>
+                            </View>
+                          ) : (
+                            <Task text={item.text} />
+                          )}
+                          
+                          <TouchableOpacity style={styles.editBtn} onPress={() => setEditingIndex(index)}>
                             <Text>🖋️</Text>
                           </TouchableOpacity>
 
@@ -167,7 +192,7 @@ const styles = StyleSheet.create({
   textInput: {
     display: 'flex',
     fontSize: 20,
-    width: '160%',
+    width: '130%',
   },
 
   inCompleteTask: {
@@ -184,8 +209,31 @@ const styles = StyleSheet.create({
     height: 25,
     borderRadius: 4,
     marginRight: 5,
-    backgroundColor: '#00FF00',
+    backgroundColor: 'rgb(77 242 110)',
     opacity: 0.8,
   },
+
+  editingContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 5,
+    width: '75%',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+
+  editorInput: {
+    backgroundColor: 'white',
+    height: 55,
+    padding: 15,
+    borderRadius: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    width: '90%',
+    fontSize: 20,
+  }
 });
 
