@@ -38,6 +38,22 @@ npm install
 npm start
 ```
 
+### Wanna take control of the Native Code ?
+
+Do the Above steps and run the following in the root directory.
+
+1. Generate Andriod Native Code
+```bash
+npx expo run:android
+```
+
+2. Generate IOS Native Code
+```bash
+npx expo run:ios
+```
+
+Refer [here](https://docs.expo.dev/workflow/customizing/) for more information of customized builds.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
