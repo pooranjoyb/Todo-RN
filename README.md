@@ -3,11 +3,11 @@
 This is a simple Todo App built using React Native followed by a [Youtube Tutorial](https://www.youtube.com/watch?v=0kL6nhutjQ8). 
 
 It allows users to create, and delete tasks to help them stay organized.
-## Features
+## Extra Features Added by Me :)  
 
 - [x] Create new tasks
 - [x] Mark tasks as completed
-- [ ] Edit existing tasks
+- [x] Edit existing tasks
 - [x] Delete tasks
 - [ ] Filter tasks by status (All, Active, Completed)
 - [ ] Uses Local Storage to Store User Generated Data
